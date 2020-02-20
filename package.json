@@ -1,0 +1,27 @@
+{
+  "name": "telehlamserver",
+  "version": "0.0.1",
+  "description": "server prototype for TeleHlam",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xDiaym/TeleHlamServer.git"
+  },
+  "keywords": [
+    "server",
+    "socket.io",
+    "messenger"
+  ],
+  "author": "xDiaym",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/xDiaym/TeleHlamServer/issues"
+  },
+  "homepage": "https://github.com/xDiaym/TeleHlamServer#readme",
+  "dependencies": {
+    "socket.io": "^2.3.0"
+  }
+}
