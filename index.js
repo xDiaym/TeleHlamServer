@@ -1,4 +1,4 @@
-/*  This Source Code Form is subject to the terms of the Mozilla Public
+/* This Source Code Form is subject to the terms of the Mozilla Public
   License, v. 2.0. If a copy of the MPL was not distributed with this
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
@@ -15,6 +15,12 @@ const io = require('socket.io').listen(port);
 const users = new Map();
 
 
+function validateNumber(countryCode, number) {
+    let numberRegex = /^\(?\d{3}\)?\s*-?\s*\d{3}\s*-?\s*\d{2}\s*-?\s*\d{2}$/;
+    let countryCodeRegex = /^\+?\s*[1-9]{1,3}$/;
+    return !!countryCode.match(countryCodeRegex) && !!number.match(numberRegex);
+}
+
 io.sockets.on('connection', (socket) => {
     let _number = null;
     console.log('New connection');
@@ -27,9 +33,10 @@ io.sockets.on('connection', (socket) => {
         console.log(`User with number ${number} added in DB`);
     });
 
-    socket.on('send', (number, text) => {
-        // TODO(all): add number validator
-        //  I don`t create it now because it`s just prototype
+    socket.on('send', (countryCode, number, text) => {
+        if (!validateNumber(countryCode, number)) {
+            socket.emit('error', `Incorrect number: ${number}`)
+        }
         let id = users.get(number);
         if (!id) {
             socket.emit('error', `There are no user with number ${number}`);
